@@ -2,15 +2,6 @@
 public class PlayerSkeleton {
 
 	// Final Rating
-	/*
-	rating = (0.0);
-    rating += ((-1.0) * (landingHeight));
-    rating += ((1.0) * ((double)(erodedPieceCellsMetric)));
-    rating += ((-1.0) * ((double)(boardRowTransitions)));
-    rating += ((-1.0) * ((double)(boardColumnTransitions)));
-    rating += ((-4.0) * ((double)(boardBuriedHoles)));
-    rating += ((-1.0) * ((double)(boardWells)));
-    */
 	private static int n = 0;
 	public static final int LANDINGHEIGHT = n++;
 	public static final int ERODEDPIECE = n++;
@@ -19,35 +10,31 @@ public class PlayerSkeleton {
 	public static final int BURIEDHOLES = n++;
 	public static final int WELLS = n++;
 	public static final int NUMFEATURES = n;
-	
-	public static void main(String[] args) {
-		State s = new State();
-		//new TFrame(s);
-		PlayerSkeleton p = new PlayerSkeleton();
+
+	private State s;
+
+	public PlayerSkeleton() {
+		s = new State();
 		
-		int rowsCleared = 0;
+		// int rowsCleared = 0;
 		while(!s.hasLost()) {
-			s.makeMove(p.pickMove(s,s.legalMoves()));
-			//s.draw();
-			//s.drawNext(0,0);
-			/*
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			//*/
-			
-			//*
-			if (rowsCleared*10000 < s.getRowsCleared()) {
-				rowsCleared++;// = s.getRowsCleared();
-				//System.out.println("You have completed "+ s.getRowsCleared() +" rows.");
-			}
-			//*/
+			s.makeMove(pickMove(s,s.legalMoves()));
+			// if (rowsCleared*10000 < s.getRowsCleared()) {
+			// 	rowsCleared++;
+			// 	System.out.println("You have completed "+ s.getRowsCleared() +" rows.");
+			// }
 		}
 		//System.out.println("Game over!");
 		//System.out.println("You have completed "+s.getRowsCleared()+" rows.");
-		System.out.println(s.getRowsCleared());
+	}
+
+	public int getRowsCleared() {
+		return s.getRowsCleared();
+	}
+
+	public static void main(String[] args) {
+		PlayerSkeleton p = new PlayerSkeleton();
+		System.out.println(p.getRowsCleared());
 	}
 	
 	//implement this function to have a working system
