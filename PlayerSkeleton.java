@@ -11,9 +11,24 @@ public class PlayerSkeleton {
 	public static final int WELLS = n++;
 	public static final int NUMFEATURES = n;
 
+	public static double weights[];
+
 	private State s;
 
-	public PlayerSkeleton() {
+	public PlayerSkeleton(double[] weights) {
+		if (weights == null) {
+			this.weights = new double[n];
+			this.weights[LANDINGHEIGHT] = -4.5;
+			this.weights[ERODEDPIECE] = 3.4;
+			this.weights[ROWTRANSITIONS] = -3.2;
+			this.weights[COLTRANSITIONS] = -9.3;
+			this.weights[BURIEDHOLES] = -7.9;
+			this.weights[WELLS] = -3.4;
+		} else {
+			this.weights = new double[weights.length];
+			System.arraycopy(weights, 0, this.weights, 0, weights.length);
+		}
+
 		s = new State();
 		
 		// int rowsCleared = 0;
@@ -26,6 +41,10 @@ public class PlayerSkeleton {
 		}
 		//System.out.println("Game over!");
 		//System.out.println("You have completed "+s.getRowsCleared()+" rows.");
+	}
+
+	public PlayerSkeleton() {
+		this(null);
 	}
 
 	public int getRowsCleared() {

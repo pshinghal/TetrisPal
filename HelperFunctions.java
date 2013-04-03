@@ -103,12 +103,12 @@ public class HelperFunctions {
         
         
         double rating = 0;
-        rating += (-4.5) * (landingHeight);
-        rating += (3.4) * ((double)(erodedPieceCellsMetric));
-        rating += (-3.2) * ((double)(boardRowTransitions));
-        rating += (-9.3) * ((double)(boardColumnTransitions));
-        rating += (-7.9) * ((double)(boardBuriedHoles));
-        rating += (-3.4) * ((double)(boardWells));
+        rating += PlayerSkeleton.weights[PlayerSkeleton.LANDINGHEIGHT] * (landingHeight);
+        rating += PlayerSkeleton.weights[PlayerSkeleton.ERODEDPIECE] * ((double)(erodedPieceCellsMetric));
+        rating += PlayerSkeleton.weights[PlayerSkeleton.ROWTRANSITIONS] * ((double)(boardRowTransitions));
+        rating += PlayerSkeleton.weights[PlayerSkeleton.COLTRANSITIONS] * ((double)(boardColumnTransitions));
+        rating += PlayerSkeleton.weights[PlayerSkeleton.BURIEDHOLES] * ((double)(boardBuriedHoles));
+        rating += PlayerSkeleton.weights[PlayerSkeleton.WELLS] * ((double)(boardWells));
 
 //        System.out.println(rating + " || " + landingHeight + " | " + erodedPieceCellsMetric + " | " +
 //        					boardRowTransitions + " | " + boardColumnTransitions + " | " +
