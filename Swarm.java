@@ -4,7 +4,7 @@ public class Swarm {
 	private static final double[] MIN = {-20.0, -20.0, -20.0, -20.0, -20.0, -20.0};
 	private static final double INERTIA_WEIGHT = 1.0;
 	private static final double COGNITIVE_WEIGHT = 2.0;
-	private static final double SOCIAL_WEIGHT = 2.0;
+	private static final double SOCIAL_WEIGHT = 2.5;
 	private static final double[] gBest = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 	private static final int gBestFitness = 0;
 
