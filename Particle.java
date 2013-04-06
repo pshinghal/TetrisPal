@@ -15,6 +15,8 @@ public class Particle {
 	public static double[] gBest;
 	public static int gBestFitness;
 
+	// TODO: If anything hits NaN, randomise (or adjust on the basis of the best solutions)
+
 	private double[] position;
 	private double[] velocity;
 	private int fitness;
@@ -25,6 +27,42 @@ public class Particle {
 
 	private double getRandomInRange(double min, double max) {
 		return min + (random.nextDouble() * (max - min));
+	}
+
+	private boolean isEven(double dNum) {
+		long lNum = (long) dNum;
+		return (lNum % 2) == 0;
+	}
+
+	private void bounceVelocity() {
+		double size;
+		for (int i = 0; i < velocity.length; i++) {
+			size = MAX[i] - MIN[i];
+			velocity[i] = velocity[i] % size;
+		}
+	}
+
+	private void bouncePosition() {
+		double size, displacement;
+		for (int i = 0; i < position.length; i++) {
+			size = MAX[i] - MIN[i];
+			// TODO: Simplify (I'm sure it CAN be simplified)
+			if (position[i] < MIN[i]) {
+				displacement = MAX[i] - position[i];
+				if (isEven(displacement / size))
+					displacement = size - (displacement % size);
+				else
+					displacement = displacement % size;
+				position[i] = MIN[i] + displacement;
+			} else if (position[i] > MAX[i]) {
+				displacement = position[i] - MIN[i];
+				if (isEven(displacement / size))
+					displacement = size - (displacement % size);
+				else
+					displacement = displacement % size;
+				position[i] = MAX[i] - displacement;
+			}
+		}
 	}
 
 	private int getOneFitness() {
@@ -63,11 +101,12 @@ public class Particle {
 		double[] second = VectorMath.scale(VectorMath.subtract(pBest, position), rand1 * COGNITIVE_WEIGHT);
 		double[] third = VectorMath.scale(VectorMath.subtract(gBest, position), rand2 * SOCIAL_WEIGHT);
 		velocity = VectorMath.add(VectorMath.add(first, second), third);
+		bounceVelocity();
 	}
 
 	private void updatePosition() {
 		position = VectorMath.add(position, velocity);
-		//TODO: Truncate at MAX and MIN?
+		bouncePosition();
 	}
 
 	private void initializePosition() {
@@ -117,8 +156,8 @@ public class Particle {
 		updateFitness();
 		updatePBest();
 		updateGBest();
-		updatePosition();
 		updateVelocity();
+		updatePosition();
 	}
 
 	public double[] getPosition() {
